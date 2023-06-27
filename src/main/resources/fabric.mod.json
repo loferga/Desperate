@@ -1,31 +1,31 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "desperate",
 	"version": "${version}",
-	"name": "Example mod",
+	"name": "Desperate",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Me!"
+		"loferga"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/loferga/Desperate"
 	},
-	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"license": "MIT License",
+	"icon": "assets/desperate/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"fr.loferga.DesperateMod"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"fr.loferga.DesperateModClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"desperate.mixins.json",
 		{
-			"config": "modid.client.mixins.json",
+			"config": "desperate.client.mixins.json",
 			"environment": "client"
 		}
 	],
