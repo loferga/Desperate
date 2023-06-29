@@ -1,0 +1,53 @@
+# here you should put the suported desperate gamemode and it's relative settings.
+# uncomment those lines or copy them and replace values if you want the gamemode to work
+# certain values can be changed in game such as chest and spawn locations
+#
+#amnesia:
+#   - [x, y, z]  #1 pos
+#   - [x, y, z]  #2 pos
+#      . . .
+#   - [x, y, z]  #n pos, as many chests as you want
+#
+#duel:
+#   - [x, y, z]  #first pos
+#   - [x, y, z]  #second pos
+#
+#deathmatch:
+#   - [x, y, z]  #1 pos
+#   - [x, y, z]  #2 pos
+#      . . .
+#   - [x, y, z]  #n pos, as many spawn as you want
+#
+#one_for_all:
+#   - [x, y, z]  #1 pos
+#   - [x, y, z]  #2 pos
+#      . . .
+#   - [x, y, z]  #n pos, as many spawn as you want
+#
+#slaughter:
+#   first_team_name:
+#      - [x, y, z]  #1 pos
+#      - [x, y, z]  #2 pos
+#         . . .
+#      - [x, y, z]  #n pos, as many spawn as you want
+#   second_team_name:
+#      - [x, y, z]  #1 pos
+#      - [x, y, z]  #2 pos
+#         . . .
+#      - [x, y, z]  #n pos, as many spawn as you want
+#   flag_position:
+#      [x, y, z]
+#
+#skirmish:
+#   first_team_name:
+#      - [x, y, z]  #1 pos
+#      - [x, y, z]  #2 pos
+#         . . .
+#      - [x, y, z]  #n pos, as many spawn as you want
+#   second_team_name:
+#      - [x, y, z]  #1 pos
+#      - [x, y, z]  #2 pos
+#         . . .
+#      - [x, y, z]  #n pos, as many spawn as you want
+#   flag_position:
+#      [x, y, z]

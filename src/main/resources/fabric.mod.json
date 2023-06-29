@@ -18,6 +18,9 @@
 		"main": [
 			"fr.loferga.DesperateMod"
 		],
+		"server":[
+			"fr.loferga.DesperateMod"	
+		],
 		"client": [
 			"fr.loferga.DesperateModClient"
 		]
