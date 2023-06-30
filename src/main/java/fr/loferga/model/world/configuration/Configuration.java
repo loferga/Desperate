@@ -1,65 +1,59 @@
 package fr.loferga.model.world.configuration;
 
+import java.util.List;
+
 public class Configuration {
 	
-	private int[][] amnesia;
+	private List<int[]> amnesia;
 	
 	private int[][] duel;
 	
-	private int[][] deathmatch;
+	private List<int[]> deathmatch;
 	
-	private int[][] one_for_all;
+	private List<int[]> one_for_all;
 	
-	private TeamConfiguration slaughter;
+	private TeamedConfiguration slaughter;
 	
-	private TeamConfiguration skirmish;
+	private TeamedConfiguration skirmish;
 
-	public int[][] getAmnesia() {
+	public List<int[]> getAmnesia() {
 		return amnesia;
 	}
 
-	public void setAmnesia(int[][] amnesia) {
-		this.amnesia = amnesia;
+	public void addAmnesia(int[] location) {
+		this.amnesia.add(location);
 	}
 
 	public int[][] getDuel() {
 		return duel;
 	}
 
-	public void setDuel(int[][] duel) {
-		this.duel = duel;
+	public void setDuel(boolean firstIndex, int[] location) {
+		this.duel[firstIndex?0:1] = location;
 	}
 
-	public int[][] getDeathmatch() {
+	public List<int[]> getDeathmatch() {
 		return deathmatch;
 	}
 
-	public void setDeathmatch(int[][] deathmatch) {
-		this.deathmatch = deathmatch;
+	public void addDeathmatch(int[] location) {
+		this.deathmatch.add(location);
 	}
 
-	public int[][] getOneForAll() {
+	public List<int[]> getOneForAll() {
 		return one_for_all;
 	}
 
-	public void setOneForAll(int[][] oneForAll) {
-		this.one_for_all = oneForAll;
+	public void addOneForAll(int[] location) {
+		this.one_for_all.add(location);
 	}
 
-	public TeamConfiguration getSlaughter() {
+	public TeamedConfiguration getSlaughter() {
 		return slaughter;
 	}
 
-	public void setSlaughter(TeamConfiguration slaughter) {
-		this.slaughter = slaughter;
-	}
-
-	public TeamConfiguration getSkirmish() {
+	public TeamedConfiguration getSkirmish() {
 		return skirmish;
-	}
-
-	public void setSkirmish(TeamConfiguration skirmish) {
-		this.skirmish = skirmish;
 	}
 	
 }

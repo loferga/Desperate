@@ -8,10 +8,8 @@ import org.slf4j.LoggerFactory;
 import fr.loferga.model.world.DesperateMap;
 import fr.loferga.model.world.MapRegistry;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.loader.api.FabricLoader;
 
 public class DesperateMod implements ModInitializer, DedicatedServerModInitializer {
 	

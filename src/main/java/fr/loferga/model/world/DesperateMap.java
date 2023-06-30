@@ -3,17 +3,13 @@ package fr.loferga.model.world;
 import java.io.File;
 import java.io.IOException;
 
-import fr.loferga.model.DesperateGamemode;
 import fr.loferga.model.world.configuration.ConfigurationHandler;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 public class DesperateMap {
 	
-	private World world;
-	private DesperateGamemode[] sdgm; // suported desperate gamemodes
+	//private World world;
+	//private DesperateGamemode[] sdgm; // suported desperate gamemodes
 	private ConfigurationHandler cfgHandler;
 	
 	public DesperateMap(MinecraftServer server, File worldDir) {

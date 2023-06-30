@@ -13,6 +13,7 @@ public class MapRegistry {
 	
 	public static void registerMap(DesperateMap map) {
 		if (map == null) return;
+		System.out.println(map.getName() + " added to registry");
 		registeredMaps.add(map);
 	}
 	

@@ -18,6 +18,7 @@ public class ConfigurationHandler {
 	public ConfigurationHandler(File configFile) {
 		this.configFile = configFile;
 		System.out.println("creation of ConfigurationHandler for file " + configFile.getAbsolutePath());
+		
 		try (final FileReader fileReader = new FileReader(configFile)) {
 			Yaml yaml = new Yaml();
 			yaml.setBeanAccess(BeanAccess.FIELD);
@@ -29,7 +30,7 @@ public class ConfigurationHandler {
 	
 	public void flushChanges() {
 		try (final FileWriter fileWriter = new FileWriter(configFile)) {
-			Yaml yaml = new Yaml();
+			Yaml yaml = new Yaml(CustomRepresenter.DEFAULT_REPRESENTER);
 			yaml.setBeanAccess(BeanAccess.FIELD);
 			yaml.dump(config, fileWriter);
 		} catch (IOException e) {
