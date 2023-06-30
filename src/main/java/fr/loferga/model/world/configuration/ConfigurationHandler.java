@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.introspector.BeanAccess;
 
 import fr.loferga.model.DesperateGamemode;
@@ -15,12 +18,20 @@ public class ConfigurationHandler {
 	private File configFile;
 	private Configuration config;
 	
+	public static void printArr(int[][] arr) {
+		for (int[] e : arr) {
+			for (int n : e)
+				System.out.print(n + " ");
+			System.out.println();
+		}
+	}
+	
 	public ConfigurationHandler(File configFile) {
 		this.configFile = configFile;
 		System.out.println("creation of ConfigurationHandler for file " + configFile.getAbsolutePath());
 		
 		try (final FileReader fileReader = new FileReader(configFile)) {
-			Yaml yaml = new Yaml();
+			Yaml yaml = new Yaml(ConfigurationRepresenter.DEFAULT_REPRESENTER);
 			yaml.setBeanAccess(BeanAccess.FIELD);
 			config = yaml.loadAs(fileReader, Configuration.class);
 		} catch (IOException e) {
@@ -30,7 +41,7 @@ public class ConfigurationHandler {
 	
 	public void flushChanges() {
 		try (final FileWriter fileWriter = new FileWriter(configFile)) {
-			Yaml yaml = new Yaml(CustomRepresenter.DEFAULT_REPRESENTER);
+			Yaml yaml = new Yaml(ConfigurationRepresenter.DEFAULT_REPRESENTER);
 			yaml.setBeanAccess(BeanAccess.FIELD);
 			yaml.dump(config, fileWriter);
 		} catch (IOException e) {

@@ -38,9 +38,9 @@ public class DesperateMod implements ModInitializer, DedicatedServerModInitializ
     		for (File worldDir : server.getRunDirectory().listFiles(n -> n.isDirectory() && n.getName().startsWith("(dsp)"))) {
     			MapRegistry.registerMap(new DesperateMap(server, worldDir));
     		}
+    		MapRegistry.dump(LOGGER);
     	});
     	LOGGER.info(MOD_ID);
-    	MapRegistry.dump(LOGGER);
     	
 	}
 }

@@ -11,9 +11,12 @@ public class DesperateMap {
 	//private World world;
 	//private DesperateGamemode[] sdgm; // suported desperate gamemodes
 	private ConfigurationHandler cfgHandler;
+	// TODO test-reserved field
+	private File worldDir;
 	
 	public DesperateMap(MinecraftServer server, File worldDir) {
 		// if (world.isClient) throw new IllegalArgumentException("the world must be a multiplayer world");
+		this.worldDir = worldDir;
 		File configFile = worldDir.toPath().resolve("config.yml").toFile();
 		
 		//RegistryKey.of(new Identifier("test"), World.CODEC);
@@ -38,7 +41,7 @@ public class DesperateMap {
 	
 	// TODO test function
 	public String getName() {
-		return "test";
+		return worldDir.getName().substring(5);
 	}
 	
 }

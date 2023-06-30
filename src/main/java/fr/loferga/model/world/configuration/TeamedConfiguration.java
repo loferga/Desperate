@@ -1,5 +1,6 @@
 package fr.loferga.model.world.configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamedConfiguration {
@@ -12,7 +13,7 @@ public class TeamedConfiguration {
 		return first_team;
 	}
 	
-	public void setFirst_team(int[] location) {
+	public void addFirstTeam(int[] location) {
 		this.first_team.add(location);
 	}
 	
@@ -20,7 +21,7 @@ public class TeamedConfiguration {
 		return second_team;
 	}
 	
-	public void setSecond_team(int[] location) {
+	public void addSecondTeam(int[] location) {
 		this.second_team.add(location);
 	}
 	
