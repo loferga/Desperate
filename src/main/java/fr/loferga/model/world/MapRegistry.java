@@ -2,6 +2,7 @@ package fr.loferga.model.world;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 
@@ -17,9 +18,15 @@ public class MapRegistry {
 		registeredMaps.add(map);
 	}
 	
+	public static void forEach(Consumer<DesperateMap> f) {
+		registeredMaps.forEach(f);
+	}
+	
+	// TODO test function
 	public static void dump(Logger logger) {
 		for (DesperateMap map : registeredMaps) {
-			logger.info(map.getName() + ": " + (map.isConfigured() ? "configured" : "unavailabla"));
+			String message = String.format("%s: %s", map.getName(), (map.isConfigured() ? "configured" : "unavailable"));
+			logger.info(message);
 			for (DesperateGamemode gm : map.getConfigurationHandler().getSupportedGamemodes())
 				logger.info(gm.toString());
 		}

@@ -1,34 +1,40 @@
 package fr.loferga.model.world;
 
-import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
 
+import fr.loferga.DesperateMod;
+import fr.loferga.model.DesperateGamemode;
 import fr.loferga.model.world.configuration.ConfigurationHandler;
-import net.minecraft.server.MinecraftServer;
 
 public class DesperateMap {
 	
 	//private World world;
-	//private DesperateGamemode[] sdgm; // suported desperate gamemodes
+	private DesperateGamemode[] sdgm; // suported desperate gamemodes
 	private ConfigurationHandler cfgHandler;
-	// TODO test-reserved field
-	private File worldDir;
 	
-	public DesperateMap(MinecraftServer server, File worldDir) {
+	// TODO test-reserved field
+	private Path worldDir;
+	
+	public DesperateMap(Path worldDir) {
 		// if (world.isClient) throw new IllegalArgumentException("the world must be a multiplayer world");
 		this.worldDir = worldDir;
-		File configFile = worldDir.toPath().resolve("config.yml").toFile();
+		Path configPath = worldDir.resolve("config.yml");
 		
 		//RegistryKey.of(new Identifier("test"), World.CODEC);
 		
-		// create config file if don't exist
-		if (!configFile.exists() || !configFile.isFile()) {
-			try {
-				configFile.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else cfgHandler = new ConfigurationHandler(configFile);
+		cfgHandler = new ConfigurationHandler(configPath);
+		sdgm = cfgHandler.getSupportedGamemodes();
+		
+	}
+	
+	public void loadMap() {
+		// should load the map
+		DesperateMod.LOGGER.info("loading " + getName() + " ...");
+		DesperateMod.LOGGER.info("map not loaded!");
+	}
+	
+	public DesperateGamemode[] getSuportedDesperateGamemode() {
+		return sdgm;
 	}
 	
 	public ConfigurationHandler getConfigurationHandler() {
@@ -41,7 +47,7 @@ public class DesperateMap {
 	
 	// TODO test function
 	public String getName() {
-		return worldDir.getName().substring(5);
+		return worldDir.getFileName().toString().substring(5);
 	}
 	
 }

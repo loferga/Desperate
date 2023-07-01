@@ -1,6 +1,9 @@
 package fr.loferga;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +13,7 @@ import fr.loferga.model.world.MapRegistry;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class DesperateMod implements ModInitializer, DedicatedServerModInitializer {
 	
@@ -24,7 +28,7 @@ public class DesperateMod implements ModInitializer, DedicatedServerModInitializ
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
-
+    	
         LOGGER.info("Hello Fabric world!");
     }
 
@@ -33,12 +37,19 @@ public class DesperateMod implements ModInitializer, DedicatedServerModInitializ
 		// TODO Auto-generated method stub
 		LOGGER.info("### SERVER ###");
 		
-    	ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+		Path serverDir = FabricLoader.getInstance().getGameDir();
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(serverDir)) {
+			for (Path path : directoryStream)
+				if (Files.isDirectory(path) && path.getFileName().toString().startsWith("(dsp)"))
+					MapRegistry.registerMap(new DesperateMap(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
     		// load every map
-    		for (File worldDir : server.getRunDirectory().listFiles(n -> n.isDirectory() && n.getName().startsWith("(dsp)"))) {
-    			MapRegistry.registerMap(new DesperateMap(server, worldDir));
-    		}
-    		MapRegistry.dump(LOGGER);
+    		MapRegistry.forEach(map -> map.loadMap());
     	});
     	LOGGER.info(MOD_ID);
     	
