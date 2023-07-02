@@ -2,6 +2,7 @@ package fr.loferga.model.world;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.slf4j.Logger;
@@ -20,6 +21,13 @@ public class MapRegistry {
 	
 	public static void forEach(Consumer<DesperateMap> f) {
 		registeredMaps.forEach(f);
+	}
+	
+	public static Optional<DesperateMap> findMap(String mapName) {
+		for (DesperateMap map : registeredMaps)
+			if (map.getName().equals(mapName))
+				return Optional.of(map);
+		return Optional.empty();
 	}
 	
 	// TODO test function

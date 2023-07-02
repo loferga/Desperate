@@ -37,21 +37,23 @@ public class DesperateMod implements ModInitializer, DedicatedServerModInitializ
 		// TODO Auto-generated method stub
 		LOGGER.info("### SERVER ###");
 		
+		EventListener.init();
+		
 		Path serverDir = FabricLoader.getInstance().getGameDir();
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(serverDir)) {
 			for (Path path : directoryStream)
-				if (Files.isDirectory(path) && path.getFileName().toString().startsWith("(dsp)"))
+				if (Files.isDirectory(path) && path.getFileName().toString().startsWith("-dsp-"))
 					MapRegistry.registerMap(new DesperateMap(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-    		// load every map
-    		MapRegistry.forEach(map -> map.loadMap());
-    	});
-    	LOGGER.info(MOD_ID);
-    	
+		ServerLifecycleEvents.SERVER_STARTED.register(server -> 
+    		MapRegistry.forEach(map -> map.loadMap(server))
+    	);
+		
+		
 	}
+	
 }

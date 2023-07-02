@@ -5,10 +5,12 @@ import java.nio.file.Path;
 import fr.loferga.DesperateMod;
 import fr.loferga.model.DesperateGamemode;
 import fr.loferga.model.world.configuration.ConfigurationHandler;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 
 public class DesperateMap {
 	
-	//private World world;
+	private ServerWorld world;
 	private DesperateGamemode[] sdgm; // suported desperate gamemodes
 	private ConfigurationHandler cfgHandler;
 	
@@ -27,10 +29,34 @@ public class DesperateMap {
 		
 	}
 	
-	public void loadMap() {
-		// should load the map
+	public void loadMap(MinecraftServer server) {
 		DesperateMod.LOGGER.info("loading " + getName() + " ...");
-		DesperateMod.LOGGER.info("map not loaded!");
+		/*
+		try (Session session = LevelStorage.create(worldDir).createSession(getName())) {
+			Executor exec = null;
+			ServerWorldProperties properties = session.readLevelProperties(null, null, null, null).getFirst().getMainWorldProperties();
+			RegistryKey<World> key =
+					RegistryKey.of(RegistryKeys.WORLD, new Identifier(worldDir.getFileName().toString()));
+			RegistryEntry<DimensionType> dimKey = null;
+			ChunkGenerator chunkGenerator = null;
+			DimensionOptions dimOptions = new DimensionOptions(dimKey, chunkGenerator);
+			WorldGenerationProgressListener progressListener = null;
+			long seed = 0;
+			List<Spawner> spawners = new ArrayList<>();
+			RandomSequencesState randSeqState = null;
+			
+			world = new ServerWorld(server, exec, session, properties, key, dimOptions, progressListener, false, seed, spawners, false, randSeqState);
+		} catch (Exception e) {
+			DesperateMod.LOGGER.info("map loading failed!");
+		}*/
+		
+		server.getWorldRegistryKeys().forEach(k -> {
+			DesperateMod.LOGGER.info(k.toString());
+		});
+	}
+	
+	public ServerWorld getWorld() {
+		return world;
 	}
 	
 	public DesperateGamemode[] getSuportedDesperateGamemode() {
