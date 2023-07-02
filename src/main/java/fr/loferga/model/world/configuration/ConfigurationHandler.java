@@ -51,6 +51,9 @@ public class ConfigurationHandler {
 	}
 	
 	public void flushChanges() {
+		if (config == null) return;
+		DesperateMod.LOGGER.info("flushing " + configPath.getParent().getFileName().toString() + " config changes");
+		DesperateMod.LOGGER.info(config.toString());
 		try (final BufferedWriter writer = Files.newBufferedWriter(configPath)) {
 			Yaml yaml = new Yaml(ConfigurationRepresenter.DEFAULT_REPRESENTER);
 			yaml.setBeanAccess(BeanAccess.FIELD);
@@ -77,7 +80,7 @@ public class ConfigurationHandler {
 		if (deathmatch) toReturn[i++] = DesperateGamemode.DEATHMATCH;
 		if (oneForAll) toReturn[i++] = DesperateGamemode.ONE_FOR_ALL;
 		if (slaughter) toReturn[i++] = DesperateGamemode.SLAUGHTER;
-		if (skirmish) toReturn[i++] = DesperateGamemode.SKIRMISH;
+		if (skirmish) toReturn[i] = DesperateGamemode.SKIRMISH;
 		return toReturn;
 	}
 	

@@ -53,6 +53,10 @@ public class DesperateMod implements ModInitializer, DedicatedServerModInitializ
     		MapRegistry.forEach(map -> map.loadMap(server))
     	);
 		
+		ServerLifecycleEvents.SERVER_STOPPING.register(server ->
+			MapRegistry.forEach(map -> map.getConfigurationHandler().flushChanges())
+		);
+		
 		
 	}
 	
