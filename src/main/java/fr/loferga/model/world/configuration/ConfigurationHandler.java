@@ -1,10 +1,11 @@
 package fr.loferga.model.world.configuration;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.introspector.BeanAccess;
@@ -24,68 +25,38 @@ public class ConfigurationHandler {
 	
 	public ConfigurationHandler(Path configPath) {
 		
-		// create config file if don't exist
-		if (!Files.exists(configPath) || !Files.isRegularFile(configPath)) {
-			try {
-				DesperateMod.LOGGER.info("Config File don't exist, beginning default config copy.");
-				Files.copy(DEFAULT_CONFIG_PATH, configPath);
-				DesperateMod.LOGGER.info("Default config successfully copied!");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
 		this.configPath = configPath;
 		
-		try (final BufferedReader reader = Files.newBufferedReader(configPath)) {
-			DesperateMod.LOGGER.info("Beginning config.yml reading.");
+		try (final Reader reader = Files.newBufferedReader(configPath)) {
+			DesperateMod.LOGGER.info("Configuration file detected, beginning reading ...");
 			Yaml yaml = new Yaml(ConfigurationRepresenter.DEFAULT_REPRESENTER);
 			yaml.setBeanAccess(BeanAccess.FIELD);
 			config = yaml.loadAs(reader, Configuration.class);
-			DesperateMod.LOGGER.info("Parsing's result: ");
-			if (config == null) DesperateMod.LOGGER.debug("Config is null");
-			else DesperateMod.LOGGER.info(config.toString());
+			setSupportedGamemodes();
 		} catch (IOException e) {
-			e.printStackTrace();
+			DesperateMod.LOGGER.info("Configuration file not detected");
+			try {
+				Files.createFile(configPath);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			// all modes are set as not configured (false by default)
 		}
+		
+	}
+	
+	private void setSupportedGamemodes() {
+		
 	}
 	
 	public void flushChanges() {
-		if (config == null) return;
-		DesperateMod.LOGGER.info("flushing " + configPath.getParent().getFileName().toString() + " config changes");
-		DesperateMod.LOGGER.info(config.toString());
-		try (final BufferedWriter writer = Files.newBufferedWriter(configPath)) {
+		try (final Writer writer = Files.newBufferedWriter(configPath, StandardOpenOption.TRUNCATE_EXISTING)) {
 			Yaml yaml = new Yaml(ConfigurationRepresenter.DEFAULT_REPRESENTER);
 			yaml.setBeanAccess(BeanAccess.FIELD);
 			yaml.dump(config, writer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	// TODO refactor
-	public DesperateGamemode[] getSupportedGamemodes() {
-		if (config == null) return new DesperateGamemode[0];
-		boolean amnesia = config.getAmnesia() != null;
-		boolean duel = config.getDuel() != null;
-		boolean deathmatch = config.getDeathmatch() != null;
-		boolean oneForAll = config.getOneForAll() != null;
-		boolean slaughter = config.getSlaughter() != null;
-		boolean skirmish = config.getSkirmish() != null;
-		int count = (amnesia?1:0) + (duel?1:0) + (deathmatch?1:0) + (oneForAll?1:0) + (slaughter?1:0) + (skirmish?1:0);
-		DesperateGamemode[] toReturn = new DesperateGamemode[count];
-		int i = 0;
-		if (amnesia) toReturn[i++] = DesperateGamemode.AMNESIA;
-		if (duel) toReturn[i++] = DesperateGamemode.DUEL;
-		if (deathmatch) toReturn[i++] = DesperateGamemode.DEATHMATCH;
-		if (oneForAll) toReturn[i++] = DesperateGamemode.ONE_FOR_ALL;
-		if (slaughter) toReturn[i++] = DesperateGamemode.SLAUGHTER;
-		if (skirmish) toReturn[i] = DesperateGamemode.SKIRMISH;
-		return toReturn;
-	}
-	
-	public Configuration getConfiguration() {
-		return config;
 	}
 	
 }
