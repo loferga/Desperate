@@ -3,7 +3,6 @@ package fr.loferga.model.world;
 import java.nio.file.Path;
 
 import fr.loferga.DesperateMod;
-import fr.loferga.model.DesperateGamemode;
 import fr.loferga.model.world.configuration.ConfigurationHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
@@ -11,7 +10,6 @@ import net.minecraft.server.world.ServerWorld;
 public class DesperateMap {
 	
 	private ServerWorld world;
-	private DesperateGamemode[] sdgm; // suported desperate gamemodes
 	private ConfigurationHandler cfgHandler;
 	
 	// TODO test-reserved field
@@ -25,7 +23,6 @@ public class DesperateMap {
 		//RegistryKey.of(new Identifier("test"), World.CODEC);
 		
 		cfgHandler = new ConfigurationHandler(configPath);
-		sdgm = cfgHandler.getSupportedGamemodes();
 		
 	}
 	
@@ -57,10 +54,6 @@ public class DesperateMap {
 	
 	public ServerWorld getWorld() {
 		return world;
-	}
-	
-	public DesperateGamemode[] getSuportedDesperateGamemode() {
-		return sdgm;
 	}
 	
 	public ConfigurationHandler getConfigurationHandler() {

@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-
-import fr.loferga.model.DesperateGamemode;
+import fr.loferga.DesperateMod;
 
 public class MapRegistry {
 	
@@ -15,7 +13,7 @@ public class MapRegistry {
 	
 	public static void registerMap(DesperateMap map) {
 		if (map == null) return;
-		System.out.println(map.getName() + " added to registry");
+		DesperateMod.LOGGER.info(map.getName() + " added to registry");
 		registeredMaps.add(map);
 	}
 	
@@ -28,16 +26,6 @@ public class MapRegistry {
 			if (map.getName().equals(mapName))
 				return Optional.of(map);
 		return Optional.empty();
-	}
-	
-	// TODO test function
-	public static void dump(Logger logger) {
-		for (DesperateMap map : registeredMaps) {
-			String message = String.format("%s: %s", map.getName(), (map.isConfigured() ? "configured" : "unavailable"));
-			logger.info(message);
-			for (DesperateGamemode gm : map.getConfigurationHandler().getSupportedGamemodes())
-				logger.info(gm.toString());
-		}
 	}
 	
 }
