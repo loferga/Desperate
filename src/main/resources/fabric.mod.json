@@ -3,15 +3,15 @@
 	"id": "desperate",
 	"version": "${version}",
 	"name": "Desperate",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "This mod allow you to play Desperate",
 	"authors": [
 		"loferga"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/loferga/Desperate"
+		"sources": "https://github.com/loferga/Desperate",
+		"issues": "https://github.com/loferga/Desperate/issues"
 	},
-	"license": "MIT License",
+	"license": "MIT",
 	"icon": "assets/desperate/icon.png",
 	"environment": "*",
 	"entrypoints": {

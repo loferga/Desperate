@@ -3,7 +3,6 @@ package fr.loferga.model.world;
 import java.nio.file.Path;
 
 import fr.loferga.DesperateMod;
-import fr.loferga.model.DesperateGamemode;
 import fr.loferga.model.world.configuration.ConfigurationHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;

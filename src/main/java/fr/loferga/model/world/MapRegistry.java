@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import fr.loferga.DesperateMod;
+
 public class MapRegistry {
 	
 	private static List<DesperateMap> registeredMaps = new ArrayList<>();
 	
 	public static void registerMap(DesperateMap map) {
 		if (map == null) return;
-		System.out.println(map.getName() + " added to registry");
+		DesperateMod.LOGGER.info(map.getName() + " added to registry");
 		registeredMaps.add(map);
 	}
 	
