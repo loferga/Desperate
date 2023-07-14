@@ -7,7 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.introspector.BeanAccess;
 import org.yaml.snakeyaml.introspector.Property;
@@ -31,9 +33,8 @@ public class ConfigurationHandler {
 		
 		@Override
 	    protected NodeTuple representJavaBeanProperty(Object javaBean, Property property, Object propertyValue, Tag customTag) {
-	        if (propertyValue == null) {
+	        if (propertyValue == null)
 	            return null; // Exclude null-valued properties
-	        }
 	        return super.representJavaBeanProperty(javaBean, property, propertyValue, customTag);
 	    }
 		
@@ -77,13 +78,23 @@ public class ConfigurationHandler {
 		return config;
 	}
 	
+	private boolean isConfigWorthDumping() {
+		return config.getAmnesia() == null ||
+			config.getDuel() != null ||
+			config.getDeathmatch() != null ||
+			config.getOneForAll() != null ||
+			config.getSlaughter() != null ||
+			config.getSkirmish() != null;
+	}
+	
 	public void save() {
-		DesperateMod.LOGGER.info("Configuration dumping ...");
-		
 		try (final Writer writer = Files.newBufferedWriter(configPath, StandardOpenOption.TRUNCATE_EXISTING)) {
-			Yaml yaml = new Yaml(ConfigurationRepresenter.DEFAULT_REPRESENTER);
-			yaml.setBeanAccess(BeanAccess.FIELD);
-			yaml.dump(config, writer);
+			if (isConfigWorthDumping()) {
+				DesperateMod.LOGGER.info("Configuration dumping ...");
+				Yaml yaml = new Yaml(ConfigurationRepresenter.DEFAULT_REPRESENTER);
+				yaml.setBeanAccess(BeanAccess.FIELD);
+				yaml.dump(config, writer);
+			} else writer.write("");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
